@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using BenchmarkDotNet;
 using BenchmarkDotNet.Tasks;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Sprache;
 
 namespace ConsoleApplication189
@@ -82,6 +83,11 @@ namespace ConsoleApplication189
         (?:,|$)                  # Match end is comma or EOS",
         RegexOptions.IgnorePatternWhitespace);
 
+        private static CsvConfiguration csvParserConfiguration = new CsvConfiguration()
+        {
+            HasHeaderRecord = false
+        };
+        
         static void Main(string[] args)
         {
             var res = regex.Matches(source);
@@ -106,6 +112,16 @@ namespace ConsoleApplication189
         public void Sprache()
         {
             Csv.Parse(source).ToArray();
+        }
+
+        [Benchmark]
+        public void CsvHelper()
+        {
+            // NOTE: CsvParser requires TextReader on creation, so we have to create it from scratch every iteration
+            using (var reader = new StringReader(source))
+            {
+                new CsvParser(reader, csvParserConfiguration).Read();
+            }
         }
     }
 }
