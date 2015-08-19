@@ -7,6 +7,7 @@ using BenchmarkDotNet;
 using BenchmarkDotNet.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Microsoft.VisualBasic.FileIO;
 using Sprache;
 
 namespace ConsoleApplication189
@@ -87,10 +88,10 @@ namespace ConsoleApplication189
         {
             HasHeaderRecord = false
         };
-        
+
         static void Main(string[] args)
         {
-            var res = regex.Matches(source);
+            (new Program()).TextFieldParser();
 
             var comp = new BenchmarkCompetitionSwitch(new[] { typeof(Program) });
             comp.Run(args);
@@ -121,6 +122,19 @@ namespace ConsoleApplication189
             using (var reader = new StringReader(source))
             {
                 new CsvParser(reader, csvParserConfiguration).Read();
+            }
+        }
+
+        [Benchmark]
+        public void TextFieldParser()
+        {
+            using (var reader = new StringReader(source))
+            {
+                var parser = new TextFieldParser(reader);
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+
+                var res = parser.ReadFields();
             }
         }
     }

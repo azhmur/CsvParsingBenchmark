@@ -8,10 +8,10 @@
 
 // Host CLR=MS.NET 4.0.30319.42000, Arch=64-bit  [RyuJIT] Common:  Type=Program  Mode=Throughput  Platform=HostPlatform  Jit=HostJit  .NET=HostFramework
 
-
-    Method |   AvrTime |      StdDev |       op/s |
----------- |---------- |------------ |----------- |
- CsvHelper |   2.21 us | 0.000000 ns |  453492.72 |
-    Regexp |   6.48 us | 0.000000 ns |   154209.4 |
-     Split | 324.39 ns | 0.000000 ns | 3082691.57 |
-   Sprache |  64.11 us | 0.000000 ns |   15599.28 |
+          Method |   AvrTime |      StdDev |       op/s |
+---------------- |---------- |------------ |----------- |
+       CsvHelper |   2.18 us | 0.000000 ns |  457749.01 |
+          Regexp |   6.38 us | 0.000000 ns |  156738.43 |
+           Split | 320.36 ns | 0.000000 ns | 3121463.29 |
+         Sprache |  65.42 us | 0.000000 ns |   15286.88 |
+ TextFieldParser |  44.96 us | 0.000000 ns |   22239.57 |
